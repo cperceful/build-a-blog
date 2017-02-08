@@ -1,0 +1,18 @@
+h1 {
+    text-align: center;
+    margin: 2px;
+}
+
+nav {
+    text-align: center;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+textarea {
+    height: 200px;
+    width: 400px;
+}
