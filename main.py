@@ -64,14 +64,26 @@ class NewPost(Handler):
         if title and body:
             blog = Blog(title = title, body = body);
             blog.put();
-            self.redirect('/blog');
+            self.redirect('/blog/{}'.format(blog.key().id()));
         else:
             error = "New posts require a body and a title"
             self.render('newpost.html', title = title, body = body, error = error);
+
+class ViewPostHandler(Handler):
+    def get(self, id):
+        # self.write(id); used to test getting id
+        id = long(id);
+        post = Blog.get_by_id(id);
+        if post:
+            self.render('singlepost.html', post = post);
+        else:
+            error = "Sorry, that's not a valid post!";
+            self.render('error.html', error = error);
 
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/blog', BlogHandler),
     ('/blog/newpost', NewPost),
+    webapp2.Route('/blog/<id:\d+>', ViewPostHandler),
 ], debug=True)
